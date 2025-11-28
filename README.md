@@ -1,7 +1,7 @@
 # Smartphone Privacy Risk Classifier  
 ### *A Machine Learning Study of Android App Permissions & Privacy Risk*
 
-**Project Website:** [To be updated]
+**Project Website:** [GitHub Page](https://arushiarunkumar.github.io/Smartphone-Privacy-Risk-Classifier/index.html)
 
 ---
 
