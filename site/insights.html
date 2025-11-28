@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insights – Privacy Risk Classifier</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* Styled insight boxes similar to previous project */
+        .insight-box {
+            border: 1px solid #c5ccd6;
+            border-radius: 8px;
+            margin: 30px 0;
+            background: #ffffff;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+        }
+
+        .insight-header {
+            padding: 15px 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            background: #2d4a72;
+            color: white;
+        }
+
+        .insight-content {
+            padding: 20px;
+        }
+
+        .insight-content img {
+            width: 100%;
+            border-radius: 6px;
+            margin-top: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Final Insights & Conclusions</h1>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="analysis.html">EDA</a>
+        <a href="hypotheses.html">Hypotheses</a>
+        <a href="insights.html">Insights</a>
+    </nav>
+</header>
+
+<section class="content">
+
+    <h2>Summary</h2>
+    <p>
+        This project analyzed <strong>29,999 Android applications</strong> to classify them into 
+        <strong>low-risk</strong> and <strong>high-risk</strong> privacy categories using their 
+        permissions, metadata, and popularity signals.  
+        Below are the key insights extracted from the EDA, hypothesis testing, and machine learning model results.
+    </p>
+
+    <hr>
+
+    <!-- Insight 1 ----------------------------------------------------------- -->
+    <div class="insight-box">
+        <div class="insight-header">1. Dangerous Permissions Strongly Indicate Higher Privacy Risk</div>
+        <div class="insight-content">
+
+            <p>
+                Apps with a greater number of dangerous permissions—such as access to phone state,
+                contacts, SMS, precise location, or device storage—are significantly more likely to be
+                classified as <strong>high-risk</strong>.
+            </p>
+
+            <p>Evidence from EDA:</p>
+            <img src="assets/dangerous_permissions_dist.png" alt="Distribution of dangerous permissions">
+
+            <p>
+                This supports the hypothesis that permissions directly reflect the app's potential 
+                to compromise user privacy.
+            </p>
+        </div>
+    </div>
+
+
+    <!-- Insight 2 ----------------------------------------------------------- -->
+    <div class="insight-box">
+        <div class="insight-header">2. App Category Plays a Major Role in Privacy Risk</div>
+        <div class="insight-content">
+
+            <p>
+                Certain categories such as <strong>Communication</strong>, <strong>Tools</strong>, 
+                and <strong>Productivity</strong> inherently request more high-risk permissions due to 
+                their functionality.  
+                Meanwhile, categories like <strong>Games</strong>, <strong>Comics</strong>, and 
+                <strong>Books</strong> have the lowest average dangerous-permission count.
+            </p>
+
+            <img src="assets/dangerous_permissions_category.png" alt="Permissions by category">
+
+            <p>
+                This insight shows that privacy risk is influenced not only by permissions but also 
+                by the type of app and its typical operational needs.
+            </p>
+        </div>
+    </div>
+
+
+    <!-- Insight 3 ----------------------------------------------------------- -->
+    <div class="insight-box">
+        <div class="insight-header">3. Popularity & Ratings Predict Trustworthiness Better Than Permissions</div>
+        <div class="insight-content">
+
+            <p>
+                One of the most surprising findings is that <strong>Number of Ratings</strong> and 
+                <strong>App Rating</strong> are among the top predictors of privacy risk.  
+                Highly-rated and widely-installed apps tend to be more privacy-conscious, with fewer 
+                dangerous permissions.
+            </p>
+
+            <img src="assets/feature_importance.png" alt="Feature importance results">
+
+            <p>
+                This supports the hypothesis that <em>users indirectly punish privacy-invasive apps 
+                through lower ratings and lower adoption.</em>
+            </p>
+        </div>
+    </div>
+
+
+    <!-- Insight 4 ----------------------------------------------------------- -->
+    <div class="insight-box">
+        <div class="insight-header">4. The Model Achieved ~80% Accuracy — High-Risk Apps Are Easier to Predict</div>
+        <div class="insight-content">
+
+            <p>
+                The Random Forest classifier achieved around <strong>80% accuracy</strong>, with stronger 
+                performance in identifying <strong>high-risk apps</strong> compared to low-risk ones.
+            </p>
+
+            <img src="assets/confusion_matrix.png" alt="Confusion matrix">
+
+            <p>
+                High-risk patterns are more distinct (many dangerous permissions, low ratings), 
+                making them easier for the model to detect.
+            </p>
+        </div>
+    </div>
+
+
+    <!-- Insight 5 ----------------------------------------------------------- -->
+    <div class="insight-box">
+        <div class="insight-header">5. Privacy Risk Is a Non-Linear Problem — Tree Models Work Best</div>
+        <div class="insight-content">
+
+            <p>
+                The correlation heatmap revealed very weak linear relationships between features.  
+                This explains why non-linear models like <strong>Random Forest</strong> perform well,
+                while linear models would struggle.
+            </p>
+
+            <img src="assets/correlation_heatmap.png" alt="Correlation heatmap">
+
+            <p>
+                Permission usage patterns are complex and sparse; therefore, tree-based models 
+                handle the structure significantly better.
+            </p>
+        </div>
+    </div>
+
+    <br><br>
+    <a class="btn" href="index.html">Back to Home →</a>
+
+</section>
+
+<footer>
+    <p>© 2025 Smartphone Privacy Risk Classifier | Built by Arushi Arunkumar</p>
+</footer>
+
+</body>
+</html>

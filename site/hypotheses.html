@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hypothesis Testing</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .tab-container {
+            margin-top: 30px;
+        }
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            border-bottom: 3px solid #2d4a72;
+        }
+        .tab {
+            padding: 12px 20px;
+            cursor: pointer;
+            background: #dfe6f0;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            border-radius: 6px 6px 0 0;
+            font-weight: bold;
+        }
+        .tab.active {
+            background: #2d4a72;
+            color: white;
+        }
+        .tab-content {
+            display: none;
+            padding: 20px;
+            background: white;
+            border-radius: 0 6px 6px 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-top: -1px;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .proof-img {
+            width: 100%;
+            margin-top: 15px;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Hypothesis Testing</h1>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="analysis.html">EDA</a>
+        <a href="hypotheses.html">Hypotheses</a>
+        <a href="insights.html">Insights</a>
+    </nav>
+</header>
+
+<section class="content">
+
+    <h2>Research Hypotheses</h2>
+    <p>Each hypothesis below includes a clear explanation, method, and visualization to support or refute it.</p>
+
+    <div class="tab-container">
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <div class="tab active" data-tab="h1">H1</div>
+            <div class="tab" data-tab="h2">H2</div>
+            <div class="tab" data-tab="h3">H3</div>
+            <div class="tab" data-tab="h4">H4</div>
+            <div class="tab" data-tab="h5">H5</div>
+            <div class="tab" data-tab="h6">H6</div>
+            <div class="tab" data-tab="h7">H7</div>
+        </div>
+
+        <!-- ======================================================================= -->
+        <!-- H1 -->
+        <div id="h1" class="tab-content active">
+            <h3>H1 — Dangerous permissions correlate with lower app ratings.</h3>
+
+            <p><strong>Meaning:</strong><br>
+            Dangerous permissions include actions such as reading SMS, accessing location, 
+            recording audio, or modifying system settings. These permissions raise legitimate user privacy concerns.</p>
+
+            <p><strong>Why This Matters:</strong><br>
+            If apps requesting more dangerous permissions receive lower ratings, 
+            it suggests that users penalize privacy-invasive behavior.</p>
+
+            <p><strong>What We Tested:</strong><br>
+            We plotted the distribution of dangerous permission counts and compared it against user ratings.</p>
+
+            <img src="assets/dangerous_permissions_dist.png" class="proof-img">
+
+            <p><strong>Interpretation:</strong><br>
+            The plot shows that apps with high dangerous-permission counts cluster in the lower-rating region.  
+            This indicates a <em>negative relationship</em> between user trust and privacy invasiveness.</p>
+
+            <p><strong>Conclusion:</strong><br>
+            Users appear to respond negatively to apps that request excessive sensitive permissions.</p>
+        </div>
+
+        <!-- ======================================================================= -->
+        <!-- H2 -->
+        <div id="h2" class="tab-content">
+            <h3>H2 — Apps with higher dangerous-permission counts are more likely to be high-risk.</h3>
+
+            <p><strong>Meaning:</strong>  
+            The more sensitive permissions an app requests, the higher the chance it poses a privacy threat.</p>
+
+            <p><strong>Why This Matters:</strong><br>
+            Models designed for privacy-risk analysis rely on permission patterns to classify apps.  
+            If dangerous permissions strongly influence classification, it validates their usefulness.</p>
+
+            <p><strong>What We Tested:</strong><br>
+            Confusion matrix from the Random Forest classifier.</p>
+
+            <img src="assets/confusion_matrix.png" class="proof-img">
+
+            <p><strong>Interpretation:</strong><br>
+            High-risk apps (Class 1) were predicted with significantly higher recall and precision,  
+            indicating that dangerous-permission-heavy apps create a distinct pattern for the classifier.</p>
+
+            <p><strong>Conclusion:</strong><br>
+            Dangerous permission count is a strong indicator of privacy risk.</p>
+        </div>
+
+        <!-- ======================================================================= -->
+        <!-- H3 -->
+        <div id="h3" class="tab-content">
+            <h3>H3 — App categories differ significantly in their privacy-risk profiles.</h3>
+
+            <p><strong>Meaning:</strong>  
+            Different categories naturally require different levels of access.  
+            For example, Communication apps may require SMS access, while Games do not.</p>
+
+            <p><strong>Why This Matters:</strong><br>
+            Risk cannot be evaluated without accounting for an app’s intended function.</p>
+
+            <p><strong>What We Tested:</strong><br>
+            Boxplot of dangerous permissions across app categories.</p>
+
+            <img src="assets/dangerous_permissions_category.png" class="proof-img">
+
+            <p><strong>Interpretation:</strong><br>
+            Categories like Communication, Tools, and Productivity request the highest number of sensitive permissions,  
+            while Books, Comics, and Games request very few.</p>
+
+            <p><strong>Conclusion:</strong><br>
+            Privacy risk varies significantly by category, and category must be included as a predictor.</p>
+        </div>
+
+        <!-- ======================================================================= -->
+        <!-- H4 -->
+        <div id="h4" class="tab-content">
+            <h3>H4 — Price and privacy-risk interact.</h3>
+
+            <p><strong>Meaning:</strong>  
+            Free apps often rely on advertising or data collection, which may require more permissions.</p>
+
+            <p><strong>Why This Matters:</strong><br>
+            A relationship between cost and permissions can highlight monetization strategies driven by user data.</p>
+
+            <p><strong>What We Tested:</strong><br>
+            Feature importance from the Random Forest model.</p>
+
+            <img src="assets/feature_importance.png" class="proof-img">
+
+            <p><strong>Interpretation:</strong><br>
+            Price consistently appeared as one of the influential predictors —  
+            free apps request more dangerous permissions on average.</p>
+
+            <p><strong>Conclusion:</strong><br>
+            Free apps tend to rely more heavily on data access, raising privacy concerns.</p>
+        </div>
+
+        <!-- ======================================================================= -->
+        <!-- H5 -->
+        <div id="h5" class="tab-content">
+            <h3>H5 — Popularity (number of ratings) is negatively correlated with dangerous permissions.</h3>
+
+            <p><strong>Meaning:</strong>  
+            If apps requesting many dangerous permissions receive fewer downloads,  
+            it indicates that users avoid such apps.</p>
+
+            <p><strong>Why This Matters:</strong><br>
+            Popularity can be an indirect measure of user trust.</p>
+
+            <p><strong>What We Tested:</strong><br>
+            Feature importance ranking, highlighting number of ratings.</p>
+
+            <img src="assets/feature_importance.png" class="proof-img">
+
+            <p><strong>Interpretation:</strong><br>
+            "Number of Ratings" scored highly in importance,  
+            suggesting that popular apps request fewer risky permissions.</p>
+
+            <p><strong>Conclusion:</strong><br>
+            User behavior reinforces privacy awareness — risky apps receive lower adoption.</p>
+        </div>
+
+        <!-- ======================================================================= -->
+        <!-- H6 -->
+        <div id="h6" class="tab-content">
+            <h3>H6 — Specific permissions strongly predict the final risk class.</h3>
+
+            <p><strong>Meaning:</strong>  
+            Not all dangerous permissions carry equal weight.  
+            Some permissions are more strongly associated with risky behavior.</p>
+
+            <p><strong>Why This Matters:</strong><br>
+            Identifying key permissions helps in designing lightweight privacy-screening tools.</p>
+
+            <p><strong>What We Tested:</strong><br>
+            Random Forest feature importance breakdown.</p>
+
+            <img src="assets/feature_importance.png" class="proof-img">
+
+            <p><strong>Interpretation:</strong><br>
+            Permissions like:<br>
+            - SMS access  
+            - Precise GPS location  
+            - Read phone identity  
+            - Modify/delete storage  
+            were among the strongest predictors.</p>
+
+            <p><strong>Conclusion:</strong><br>
+            Certain permissions act as “red flags” for privacy risk classification.</p>
+        </div>
+
+        <!-- ======================================================================= -->
+        <!-- H7 -->
+        <div id="h7" class="tab-content">
+            <h3>H7 — A machine learning model can predict privacy risk with high accuracy.</h3>
+
+            <p><strong>Meaning:</strong>  
+            Automated tools could help users and researchers detect privacy-invasive applications.</p>
+
+            <p><strong>Why This Matters:</strong><br>
+            Manual inspection of thousands of apps is impractical — ML scales this process.</p>
+
+            <p><strong>What We Tested:</strong><br>
+            Final model accuracy and confusion matrix.</p>
+
+            <img src="assets/confusion_matrix.png" class="proof-img">
+
+            <p><strong>Interpretation:</strong><br>
+            The Random Forest classifier achieved ~80% accuracy and demonstrated especially strong performance  
+            in identifying high-risk apps.</p>
+
+            <p><strong>Conclusion:</strong><br>
+            Machine learning is capable of reliably flagging potential privacy threats in Android apps.</p>
+        </div>
+
+    </div>
+
+    <a class="btn" href="insights.html">Next Page →</a>
+
+</section>
+
+<footer>
+    <p>© 2025 Smartphone Privacy Risk Classifier | Built by Arushi Arunkumar</p>
+</footer>
+
+<script>
+    // Tab switching logic
+    const tabs = document.querySelectorAll('.tab');
+    const contents = document.querySelectorAll('.tab-content');
+
+    tabs.forEach(t => {
+        t.addEventListener('click', () => {
+            tabs.forEach(tab => tab.classList.remove('active'));
+            t.classList.add('active');
+
+            contents.forEach(c => c.classList.remove('active'));
+            document.getElementById(t.dataset.tab).classList.add('active');
+        });
+    });
+</script>
+
+</body>
+</html>
